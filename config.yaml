@@ -1,7 +1,7 @@
 batch_size: 32
 img_height: 180
 img_width: 180
-seed: 123
+seed: 1235
 valid_split: 0.2
 epochs: 15
 dropout_rate: 0.2

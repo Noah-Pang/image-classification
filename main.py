@@ -19,5 +19,14 @@ data_dir = pathlib.Path(data_dir)
 image_count = len(list(data_dir.glob('*/*.jpg')))
 print(image_count)
 
-# history = train("ass", "./datasets/")
-load_model("models/ass", "./datasets/", "./testing/", os.listdir("./testing/"))
+
+
+
+history = train("dog", "./datasets/dog")
+
+test_files = []
+for (dir_path, dir_names, file_names) in os.walk("./testing/dog"):
+    for i in range(len(file_names)):
+        file_names[i] = dir_path + "/" + file_names[i]
+    test_files.extend(file_names)
+load_model("models/dog", "./datasets/dog", test_files)

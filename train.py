@@ -9,6 +9,7 @@ from tensorflow.keras.models import Sequential
 
 from utils import load_config
 from utils import load_dataset
+from utils import plot_accuracy
 
 config = load_config("./config.yaml")
 
@@ -64,5 +65,7 @@ def train(model_name: str, data_dir):
     )
 
     model.save("./models/" + model_name)
+
+    plot_accuracy(history, model_name)
 
     return history

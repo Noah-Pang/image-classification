@@ -6,7 +6,7 @@ from tensorflow import keras
 from utils import load_config
 from utils import load_dataset
 
-def load_model(model_path, data_dir, images_path, images):
+def load_model(model_path, data_dir, images):
     model = keras.models.load_model(model_path)
     config = load_config("./config.yaml")
     train_ds, val_ds = load_dataset(data_dir)
@@ -15,7 +15,7 @@ def load_model(model_path, data_dir, images_path, images):
 
     for i, image in enumerate(images):
         img = tf.keras.utils.load_img(
-            images_path + image, target_size=(config["img_height"], config["img_width"])
+            image, target_size=(config["img_height"], config["img_width"])
         )
         img_array = tf.keras.utils.img_to_array(img)
         img_array = tf.expand_dims(img_array, 0) # Create a batch
@@ -27,3 +27,9 @@ def load_model(model_path, data_dir, images_path, images):
             "Image {} most likely belongs to {} with a {:.2f} percent confidence."
             .format(images[i], class_names[np.argmax(score)], 100 * np.max(score))
         )
+    testing = tf.keras.utils.image_dataset_from_directory(
+        "./testing/dog",
+        seed=config["seed"],
+        image_size=(config["img_height"], config["img_width"]),
+        batch_size=config["batch_size"])
+    print(model.evaluate(testing))
